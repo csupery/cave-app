@@ -6,7 +6,7 @@
   <div class="form-inputs">
     <%= f.input :quantity %>
     <%= f.association :vintage %>
-    <%= f.input :size %>
+    <%= f.input :size, required: true, include_blank: "Taille de la bouteille", label: false, collection: SIZE %>
   </div>
 
   <div class="form-actions">
