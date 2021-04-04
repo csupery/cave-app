@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Vintages</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Year</th>
+      <th>Castle</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vintages.each do |vintage| %>
+      <tr>
+        <td><%= vintage.year %></td>
+        <td><%= vintage.castle_id %></td>
+        <td><%= link_to 'Show', vintage %></td>
+        <td><%= link_to 'Edit', edit_vintage_path(vintage) %></td>
+        <td><%= link_to 'Destroy', vintage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Vintage', new_vintage_path %>
