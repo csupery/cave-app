@@ -3,7 +3,7 @@ class VintagesController < ApplicationController
 
   # GET /vintages
   def index
-    @vintages = Vintage.all
+    @vintages = Vintage.all.order(:year)
   end
 
   # GET /vintages/1
@@ -53,6 +53,6 @@ class VintagesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def vintage_params
-      params.require(:vintage).permit(:year, :castle_id)
+      params.require(:vintage).permit(:year)
     end
 end

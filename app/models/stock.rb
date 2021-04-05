@@ -1,4 +1,5 @@
 class Stock < ApplicationRecord
+  belongs_to :castle
   belongs_to :vintage
 
   enum size: SIZE

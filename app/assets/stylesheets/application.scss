@@ -1,2 +1,17 @@
 /* application.scss */
 @import "bootstrap/scss/bootstrap"; /* picks it up in node_modules! */
+@import "components/index";
+@import "pages/index";
+
+a.secondary-link, .secondary-link {
+  color: #535353;
+  // text-decoration: underline;
+}
+
+.small-bottle {
+  height: 50px;
+}
+
+.big-bottle {
+  height: 60px;
+}
