@@ -22,8 +22,13 @@ class StocksController < ApplicationController
   # POST /stocks
   def create
     @stock = Stock.new(stock_params)
+    @previous_stock = Stock.where(vintage_id: @stock.vintage_id, size: @stock.size, castle_id: @stock.castle_id).first
 
-    if @stock.save
+    if @previous_stock
+      @new_quantity = @stock.quantity + @previous_stock.quantity
+      @previous_stock.update(quantity: @new_quantity)
+      redirect_to stocks_path
+    elsif @stock.save
       redirect_to @stock, notice: 'Stock was successfully created.'
     else
       render :new
@@ -53,6 +58,6 @@ class StocksController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def stock_params
-      params.require(:stock).permit(:quantity, :vintage_id, :size)
+      params.require(:stock).permit(:quantity, :vintage_id, :castle_id, :size)
     end
 end

@@ -1,31 +1,51 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Chateaux dans la cave</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Appellation</th>
-      <th>Pays</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<!-- <p id="notice"><%= notice %></p> -->
     <% @castles.each do |castle| %>
-      <tr>
-        <td><%= castle.name %></td>
-        <td><%= castle.appellation %></td>
-        <td><%= castle.pays %></td>
-        <td><%= link_to 'Show', castle %></td>
-        <td><%= link_to 'Edit', edit_castle_path(castle) %></td>
-        <td><%= link_to 'Destroy', castle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+      <%= link_to castle_path(castle), class: "secondary-link text-decoration-none" do %>
+        <div class="wine-card">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h3><%= castle.name %></h3>
+              <p> <%= castle.appellation.name %>, <%= castle.appellation.location %></p>
+            </div>
+            <div class="mt-1">
+              <div class="d-flex">
+                <div class='d-flex align-items-end mx-3 text-center'>
+
+                <% @by_year = castle.stocks.group(:vintage_id).sum(:quantity).transform_keys {|key| Vintage.find(key).year}.sort %>
+                <% @by_year.map do |year, stock| %>
+                    <div>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th><%= year %></th>
+                            <th colspan="3"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td><%= stock %></td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  <% end %>
+                </div>
+              <% if castle.stocks.distinct.count(:size) > 1  %>
+                <div class="d-flex align-items-end justify-content-end">
+                  <%= image_tag 'wine-bottle.svg', class:"small-bottle mx-0 px-1" %>
+                  <%= image_tag 'wine-bottle.svg', class:"big-bottle mx-0" %>
+                </div>
+              <% else %>
+                <div class="d-flex align-items-end justify-content-end">
+                 <%= image_tag 'wine-bottle.svg', class:"small-bottle mx-0 ml-3" %>
+                </div>
+              <% end %>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
     <% end %>
-  </tbody>
-</table>
 
-<br>
-
-<%= link_to 'New Castle', new_castle_path %>
+<%#= link_to 'Edit', edit_castle_path(castle) %>
+<%#= link_to 'Destroy', castle, method: :delete, data: { confirm: 'Are you sure?' } %>

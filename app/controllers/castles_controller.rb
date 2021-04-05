@@ -4,6 +4,7 @@ class CastlesController < ApplicationController
   # GET /castles
   def index
     @castles = Castle.all
+    @vintage = Vintage.all
   end
 
   # GET /castles/1
@@ -53,6 +54,6 @@ class CastlesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def castle_params
-      params.require(:castle).permit(:name)
+      params.require(:castle).permit(:name, :appellation_id)
     end
 end
