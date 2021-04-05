@@ -10,18 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_04_095555) do
+ActiveRecord::Schema.define(version: 2021_04_05_084523) do
+
+  create_table "appellations", force: :cascade do |t|
+    t.string "name"
+    t.string "location"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "castles", force: :cascade do |t|
     t.string "name"
-    t.string "appellation"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "pays"
+    t.integer "appellation_id", null: false
+    t.index ["appellation_id"], name: "index_castles_on_appellation_id"
   end
 
   create_table "stocks", force: :cascade do |t|
-    t.integer "quantity"
+    t.integer "quantity", default: 0, null: false
     t.integer "vintage_id", null: false
     t.integer "size"
     t.datetime "created_at", precision: 6, null: false
@@ -37,6 +44,7 @@ ActiveRecord::Schema.define(version: 2021_04_04_095555) do
     t.index ["castle_id"], name: "index_vintages_on_castle_id"
   end
 
+  add_foreign_key "castles", "appellations"
   add_foreign_key "stocks", "vintages"
   add_foreign_key "vintages", "castles"
 end
