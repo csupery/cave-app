@@ -53,6 +53,6 @@ class CastlesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def castle_params
-      params.require(:castle).permit(:name, :appellation, :pays)
+      params.require(:castle).permit(:name)
     end
 end

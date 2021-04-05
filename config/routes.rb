@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :appellations
   resources :stocks
   resources :vintages
   resources :castles
