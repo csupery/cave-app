@@ -4,7 +4,7 @@ class CastlesController < ApplicationController
   # GET /castles
   def index
     @castles = Castle.all
-    @vintage = Vintage.all
+    @vintages = Vintage.all
   end
 
   # GET /castles/1
