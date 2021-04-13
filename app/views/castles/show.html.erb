@@ -12,7 +12,7 @@
     <% @castle_vintages = @castle.vintages.order(:year).uniq %>
     <% @sizes = (@castle.stocks.map do |stock| stock.size end).uniq %>
   <thead>
-    <tr>
+    <tr class="text-center">
       <th scope='col'>Millésimes</th>
       <% @sizes.each do |size| %>
         <th scope="col"><%= size %> </th>
@@ -22,13 +22,17 @@
   <tbody>
     <% @castle_vintages.each do |vintage| %>
     <tr>
-      <th scope="row"> <%= vintage.year %> </th>
+      <th scope="row" class="text-center"> <%= vintage.year %> </th>
       <% @sizes.each do |size|%>
-      <td>
+      <td class="text-center">
+      <% if @castle.stocks.where(vintage_id: vintage.id, size: size).blank? %>
+        0
+        <% else %>
       <% @castle.stocks.where(vintage_id: vintage.id, size: size).each do |stock| %>
         <%= stock.quantity %>
-      </td>
       <% end %>
+      <% end %>
+      </td>
       <% end %>
       <% end %>
       </tr>
