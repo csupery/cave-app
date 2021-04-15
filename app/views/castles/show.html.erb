@@ -9,24 +9,33 @@
   </p>
 
   <table class="table">
-    <% @by_year = @castle.stocks.group(:vintage_id)%>
+    <% @castle_vintages = @castle.vintages.order(:year).uniq %>
+    <% @sizes = (@castle.stocks.map do |stock| stock.size end).uniq %>
   <thead>
-    <tr>
+    <tr class="text-center">
       <th scope='col'>Millésimes</th>
-      <% @by_year.each do |stock| %>
-        <th scope="col"><%= stock.size %> </th>
+      <% @sizes.each do |size| %>
+        <th scope="col"><%= size %> </th>
       <% end %>
     </tr>
   </thead>
   <tbody>
-    <% @by_year.each do |stock| %>
-          <tr>
-              <th scope="row"><%= Vintage.find(stock.vintage_id).year %> </th>
-          <td>
-            <%= stock.quantity %>
-          </td>
-            <% end %>
-          </tr>
+    <% @castle_vintages.each do |vintage| %>
+    <tr>
+      <th scope="row" class="text-center"> <%= vintage.year %> </th>
+      <% @sizes.each do |size|%>
+      <td class="text-center">
+      <% if @castle.stocks.where(vintage_id: vintage.id, size: size).blank? %>
+        0
+        <% else %>
+      <% @castle.stocks.where(vintage_id: vintage.id, size: size).each do |stock| %>
+        <%= stock.quantity %>
+      <% end %>
+      <% end %>
+      </td>
+      <% end %>
+      <% end %>
+      </tr>
   </tbody>
 </table>
 
